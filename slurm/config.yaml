@@ -1,0 +1,19 @@
+executor: slurm
+jobs: 20
+use-conda: True
+
+default-resources:
+  mem_mb: 20000
+  runtime: 120
+  slurm_partition: hugemem,compute
+  slurm_account: 
+  ntasks: 1
+
+restart-times: 2
+# Additional settings to control SLURM log behavior
+slurm-logdir: slurm/logs/
+slurm-keep-successful-logs: True
+seconds-between-status-checks: 5
+max-jobs-per-second: 1
+max-status-checks-per-second: 1
+scheduler: greedy

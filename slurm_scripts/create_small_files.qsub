@@ -1,0 +1,46 @@
+#!/bin/bash -e
+
+#SBATCH --job-name=create_small_files    # Job name matching the Snakemake rule
+#SBATCH --ntasks=1                       # Single task
+#SBATCH --cpus-per-task=1               # 1 CPU (matches threads: 1 in Snakemake)
+#SBATCH --mem=2G                        # 2GB memory (matches mem_mb = 1024*2)
+#SBATCH --time=00:01:00                 # 1 minute (matches runtime = 1)
+#SBATCH --partition=compute,hugemem     # Use the compute and hugemem partition
+#SBATCH --account=2024-beyond_the_genome
+
+# Check if batch parameter is provided
+if [ -z "$1" ]; then
+    echo "Usage: sbatch create_small_files.qsub <batch_number>"
+    echo "Example: sbatch create_small_files.qsub 1"
+    exit 1
+fi
+
+BATCH=$1
+LOGFILE="results/create_small_files_${BATCH}.log"
+TEMPDIR="results/create_small_files_${BATCH}"
+
+# Create results directory if it doesn't exist
+mkdir -p results
+
+# Start timing
+start=$(date +%s)
+
+# Log initial message
+echo "$(hostname): Creating small files for batch ${BATCH}..." > ${LOGFILE}
+
+# Create temporary directory
+mkdir -p ${TEMPDIR}
+
+# Create 10 small files (matching the Snakemake rule)
+for i in $(seq 1 10); do
+    echo $i > ${TEMPDIR}/file_$i.txt
+done
+
+# End timing and log completion
+end=$(date +%s)
+echo "Small file creation completed in $((end-start)) seconds" >> ${LOGFILE}
+echo "Created 10 files in ${TEMPDIR}" >> ${LOGFILE}
+
+# Note: In a real scenario, you might want to clean up the temp directory
+# For now, leaving it as the Snakemake version uses temp() which would auto-clean
+echo "Temporary files created in: ${TEMPDIR}" >> ${LOGFILE}
