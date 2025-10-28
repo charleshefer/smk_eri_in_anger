@@ -38,7 +38,7 @@ smk_eri_in_anger/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/smk_eri_in_anger.git
+   git clone https://github.com/charleshefer/smk_eri_in_anger.git
    cd smk_eri_in_anger
    ```
 
