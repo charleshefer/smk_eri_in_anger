@@ -1,0 +1,29 @@
+============================================================
+Snakemake SLURM LOG ANALYSIS REPORT
+============================================================
+Total directories analyzed: 14
+Total log files found: 16
+Directories with multiple logs: 1
+Directories with single logs: 13
+
+DIRECTORIES WITH MULTIPLE LOG FILES (Job restarted):
+--------------------------------------------------
+
+Rule: rule_create_large_file
+  Job 1: 3 log files
+    - 2638448.log
+    - 2638434.log
+    - 2638450.log
+
+SUMMARY BY RULE:
+------------------------------
+rule_create_large_file:
+  Total directories: 4
+  Total log files: 6
+  Directories with multiple logs: 1
+
+rule_create_small_files:
+  Total directories: 10
+  Total log files: 10
+  Directories with multiple logs: 0
+

@@ -64,9 +64,9 @@ This will only run on the login node, for testing purposes. The jobs will finish
 
 Remove the results directory before proceeding to the next step:
 
-    ```bash
-    rm -rf results/
-    ```
+   ```bash
+   rm -rf results/
+   ```
 
 5. Run snakemake using the SLURM profile to submit jobs to the cluster:
 
@@ -88,7 +88,24 @@ An easy way to do this is to run:
    python workflow/bin/count_logfiles.py
    ```
 
+
 This summarizes the number of log files present, gives some detail about what jobs (their jobids) were run more than once.
+
+6. Rerun the analysis
+
+To verify that it appears to be a random issue, where a random job just never finishes, you can rerun the snakemake command multiple times, but only after removing the results directory, and the slurm/logs directory.
+
+   ```bash
+   rm -rf results/ slurm/logs
+   snakemake -s workflow/rules/01_snakemake.smk --jobs 10 --profile slurm 
+   ```
+
+
+7. My test results
+
+I have ran this test multiple times, and I have observed that in some runs, all jobs complete successfully, while in others, one or more jobs hang indefinitely until they time out. This inconsistency makes it challenging to identify the root cause of the issue.
+
+I have stored some of my test results in the `test_results/` directory, with timestamps indicating when each test was run. You can refer to these logs to see examples of both successful and failed runs.
 
 Note: I made ample use of copilot to generate this README.md file, as well as add some debugging code to the rules in the Snakemake workflow.
 
