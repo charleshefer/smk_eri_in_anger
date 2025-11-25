@@ -4,6 +4,8 @@
 
 I am having a hard time getting Snakemake to reliably run jobs on the eRI. Sometimes jobs just never finish, and I cannot determine why. This repository contains a minimal Snakemake workflow to try and reproduce the issue. In short, the workflow creates multiple small files (10 directories with 10 files each) and a few large files (5 files of 1Gb in size each, using `dd`), to see if the cluster can handle the load without jobs hanging until they time out.
 
+Update: I just discovered that specifying the interactive partition, the jobs just complete with no issues.
+
 ## Overview
 
 This repository contains a Snakemake workflow designed to test the eRI. The workflow creates two types of computational jobs to evaluate cluster performance:
