@@ -10,8 +10,8 @@ configfile: "config/config.yaml"
 
 rule all:
 	input:
-		expand("results/create_small_files_{batch}.log", batch=range(1,11)),
-		expand("results/create_large_file_{large_batch}.log", large_batch=range(1,5))
+		expand("results/create_small_files_{batch}.log", batch=range(1,201)),
+		expand("results/create_large_file_{large_batch}.log", large_batch=range(1,101))
 
 rule create_small_files:
 	output:
@@ -26,9 +26,10 @@ rule create_small_files:
 		"""
 		set -euo pipefail
 		start=$(date +%s)
+		sleep 5
 		echo "$(hostname): Creating small files for batch {wildcards.batch}..." > {output.logfile}
 		mkdir -p {output.tempdir}
-		for i in $(seq 1 10); do
+		for i in $(seq 1 100); do
 			echo $i > {output.tempdir}/file_$i.txt
 		done
 		end=$(date +%s)
@@ -50,6 +51,7 @@ rule create_large_file:
 		"""
 		set -euo pipefail
 		start=$(date +%s)
+		sleep 5
 		echo "$(hostname): Creating large file for batch {wildcards.large_batch}..." > {output.logfile}
 		echo "Target file: {output.largefile}" >> {output.logfile}
 		dd if=/dev/zero of={output.largefile} bs=1M count=1024 status=none
