@@ -27,6 +27,10 @@ smk_eri_in_anger/
 ├── slurm/
 │   ├── config.yaml               # SLURM profile configuration
 │   └── logs/                     # SLURM job logs (auto-generated)
+├── generic/
+│   ├── config.yaml               # SLURM profile configuration, for the generic slurm job executioner
+│   └── logs/                     # SLURM job logs (auto-generated)
+|   └── status.py                 # Custom script to check job status
 ├── slurm_scripts/                # Alternative qsub scripts
 │   ├── create_small_files.qsub
 │   ├── create_large_file.qsub
@@ -34,6 +38,11 @@ smk_eri_in_anger/
 ├── results/                      # Output files (auto-generated)
 └── README.md                     # This file
 ```
+
+## Choice of cluster-job-executioner
+
+On 11/12/2025 the slurm applience was moved to a new hypervisor. Since this, the slurm job executioner that I have used for the past 2 years stopped working. I replaced this with the generic cluster executioner, and
+added a custom script to check for job completion (generic/status.py). Now you have the options to use either of the two job executioners.
 
 ## Install
 
@@ -72,6 +81,8 @@ Remove the results directory before proceeding to the next step:
 
 5. Run snakemake using the SLURM profile to submit jobs to the cluster:
 
+### Note, as of 11/12/2025 this is not working, see step 6. below.
+
 The job will be submitted to the SLURM queue without an account specification, which means it will use your default account.
 
    ```bash
@@ -89,7 +100,15 @@ An easy way to do this is to run:
    ```bash
    python workflow/bin/count_logfiles.py
    ```
+6. Run snakemake using the generic profile to the cluster:
 
+After unforeseen changes to the system, the method in 5. above does not work anymore. You need to run the pipeline using the generic slurm job executioner. Here is the code:
+
+```bash
+snakemake -s workflow/rules/01_snakemake.smk --jobs 10 --profile generic
+```
+
+You can continue with counting the logfiles as shown above in 5. 
 
 This summarizes the number of log files present, gives some detail about what jobs (their jobids) were run more than once.
 
