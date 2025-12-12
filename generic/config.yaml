@@ -33,7 +33,7 @@ cluster-generic-submit-cmd: >-
 
 # Provide a status command (script shown below). If you prefer, you can
 # point this to any script/binary that accepts a single jobid argument.
-cluster-generic-status-cmd: "~/bin/status.py"
+cluster-generic-status-cmd: "generic/status.py"
 
 # Cancel is simply scancel in SLURM
 cluster-generic-cancel-cmd: "scancel"
